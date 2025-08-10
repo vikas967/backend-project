@@ -15,7 +15,7 @@ import fs from 'fs'
             })
 
             // file has been uploaded succesfully
-            console.log('File uploaded successfully:', result.secure_url);
+            fs.unlinkSync(filePath); // delete the file after upload
             return result;
             
         } catch (error) {
