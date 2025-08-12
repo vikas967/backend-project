@@ -88,7 +88,7 @@ const loginUser = asyncHandler(async (req, res) => {
     // return response with user data
     const { email,password, username } = req.body;
 
-    if(!email || !username){
+    if(!(email || username)){
         throw new ApiError(400, "Email and username are required");
     }
 
@@ -97,7 +97,7 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError(404, "User not found");
     }
 
-    const isPasswordvalid = await user.isPasswordValid(password);
+    const isPasswordvalid = await user.isPasswordCorrect(password);
 
     if (!isPasswordvalid) {
         throw new ApiError(401, "Invalid password");
@@ -154,4 +154,4 @@ const logoutUser = asyncHandler(async (req, res) => {
         )
 })
 
-export { registerUser,loginUser }
+export { registerUser,loginUser, logoutUser }
