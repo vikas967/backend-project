@@ -276,14 +276,14 @@ const updateUserCoverimage = asyncHandler(async (req, res) => {
     if (CoverLocalPath) {
         throw new ApiError(400, "Cover image is required");
     }
-    const  coverImage = await uploadOnCloudinary(CoverLocalPath)
+    const  coverImage = await uploadOnCloudinary(CoverLocalPath)  // upload the updated image on cloudinary 
     if (! coverImage.url) {
         throw new ApiError(500, "Failed to upload Cover image");
     }
 
     const user = await User.findByIdAndUpdate(
         req.user._id,
-        { $set: {  coverImage:  coverImage.url } },
+        { $set: {  coverImage:  coverImage.url } },    // update the cpverimage url in the user document
         { new: true, runValidators: true }
     ).select("-password -refreshToken");
 
@@ -393,7 +393,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
         }
      ])
      return res.status(200).json(
-        new ApiResponse(200, "Watch history fetched successfully", user[0].watchHistoryVideos)
+        new ApiResponse(200, "Watch history fetched successfully", user[0].watchHistoryVideos)// because user[0] is the current user and watchHistoryVideos is the field we populated
      )
 })
     
